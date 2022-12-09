@@ -98,15 +98,12 @@ graph graph::mstKur()
         //get the trees that contain the two vertices
         set<int> tree1;
         set<int> tree2;
-        set<set<int>>::iterator it1, it2;
         for (set<set<int>>::iterator it = trees.begin(); it != trees.end(); it++) {
             if ((*it).find(i) != (*it).end()) {
                 tree1 = *it;
-                it1 = it;
             }
             if ((*it).find(j) != (*it).end()) {
                 tree2 = *it;
-                it2 = it;
             }
         }
         //if the two vertices are not in the same cluster i.e. no cycle
@@ -114,10 +111,10 @@ graph graph::mstKur()
             //add the edge to the minimum spanning tree
             mst.add_edge(i, j, w);
             //merge the two trees
+            trees.erase(tree1);
+            trees.erase(tree2);
             tree1.insert(tree2.begin(), tree2.end());
-            trees.erase(it1);
             //new stuff
-            trees.erase(it2);
             trees.insert(tree1);
         }
     }
