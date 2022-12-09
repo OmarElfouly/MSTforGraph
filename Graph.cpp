@@ -1,4 +1,5 @@
 #include "Graph.h"
+#include <map>
 
 graph::graph(int n)
 {
@@ -28,14 +29,37 @@ void graph::add_edge(int i, int j, int w)
 
 void graph::print()
 {
-    
+    int count = 0;
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             cout.width(3);
             cout << adj[i][j] << " ";
+            count++;
         }
         cout << "\n";
     }
+    cout << "\n";
+
+    cout << "Number of Vertices are: " << n << "\nNumber of non-zero edges: "<<count<<"\n\n";
+    //Improve or remove the following
+    map<int, char> Alphabet = {
+        {0,'A'},{1,'B'},{2,'C'},{3,'D'},{4,'E'},{5,'F'},{6,'G'},{7,'H'}
+    };
+    set<pair<int, pair<int, int>>> edges;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (adj[i][j] != 0) {
+                edges.insert(make_pair(adj[i][j], make_pair(i, j)));
+            }
+        }
+    }
+    cout << "These " << edges.size() << " are:\n";
+    for (auto edge : edges) {
+        cout << Alphabet[edge.second.first] << " " << Alphabet[edge.second.second] << " " << edge.first<<"\n";
+    }
+
+    
+
 }
 
 graph graph::mstKur()
@@ -74,23 +98,33 @@ graph graph::mstKur()
         //get the trees that contain the two vertices
         set<int> tree1;
         set<int> tree2;
+        set<set<int>>::iterator it1, it2;
         for (set<set<int>>::iterator it = trees.begin(); it != trees.end(); it++) {
             if ((*it).find(i) != (*it).end()) {
                 tree1 = *it;
+                it1 = it;
             }
             if ((*it).find(j) != (*it).end()) {
                 tree2 = *it;
+                it2 = it;
             }
         }
         //if the two vertices are not in the same cluster i.e. no cycle
-        if (tree1 != tree2) {
+        if (tree1.size()!=0 && tree2.size()!=0&&tree1 != tree2) {
             //add the edge to the minimum spanning tree
             mst.add_edge(i, j, w);
             //merge the two trees
             tree1.insert(tree2.begin(), tree2.end());
-            trees.erase(tree2);
+            trees.erase(it1);
+            //new stuff
+            trees.erase(it2);
+            trees.insert(tree1);
         }
     }
+    cout << "test\n";
     return mst;
     
 }
+/*graph graph::mstKur() {
+
+}*/

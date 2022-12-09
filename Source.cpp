@@ -44,5 +44,9 @@ int main() {
 	cout << "Adjacency matrix is:\n";
 	G.print();
 
+	//testing kur
+	graph kur = G.mstKur();
+	cout << "MST KUR IS:\n";
+	kur.print();
 
 }
