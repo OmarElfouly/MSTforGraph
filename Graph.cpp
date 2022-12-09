@@ -70,6 +70,7 @@ graph graph::mstKur()
         //get the two vertices of the edge
         int i = edge.second.first;
         int j = edge.second.second;
+        int w = edge.first;
         //get the trees that contain the two vertices
         set<int> tree1;
         set<int> tree2;
@@ -84,7 +85,7 @@ graph graph::mstKur()
         //if the two vertices are not in the same cluster i.e. no cycle
         if (tree1 != tree2) {
             //add the edge to the minimum spanning tree
-            mst.add_edge(i, j, edge.first);
+            mst.add_edge(i, j, w);
             //merge the two trees
             tree1.insert(tree2.begin(), tree2.end());
             trees.erase(tree2);
