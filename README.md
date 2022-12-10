@@ -1,5 +1,6 @@
 # MSTforGraph
-- [ ]  Pretty output for KUR
+##To do:
+
 - [ ]  Random file generation
 - [ ]  Prim
 - [ ]  Compare the preformance
