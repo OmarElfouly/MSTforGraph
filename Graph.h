@@ -18,6 +18,10 @@ public:
     ~graph();
     void add_edge(int i, int j, int w);
     void print();
+
     graph mstKur();
     void printKur();
+
+    void mstPrim();
+    
 };

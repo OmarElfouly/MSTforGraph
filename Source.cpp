@@ -111,12 +111,14 @@ int main() {
 	G.print();
 
 	//testing kur
-	graph kur = G.mstKur();
+	/*graph kur = G.mstKur();
 	cout << "MST KUR IS:\n";
-	kur.printKur();
+	kur.printKur();*/
+
+	//testing prim on orignal
+	G.mstPrim();
 
 	//testing rand graph file
-	graph r =makeRandomGraph();
+	graph r = makeRandomGraph();
 	r.print();
-
 }

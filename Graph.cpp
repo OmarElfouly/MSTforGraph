@@ -116,3 +116,48 @@ void graph::printKur()
         cout << static_cast<char>('A' + one)<< to_string(one/27)<< " " << static_cast<char>('A' + two) << to_string(two / 27) << " " << edge.first << "\n";
     }
 }
+
+
+
+void graph::mstPrim()
+{
+    int size = n;
+
+    int* parent = new int[n];
+    int* key = new int[n];
+    bool* set = new bool[n];
+
+    for (int i = 0; i < n; i++) {
+        key[i] = INT_MAX;
+        set[i] = false;
+    }
+
+    key[0] = 0;
+    parent[0] = -1;
+
+    for (int i = 0; i < n - 1; i++) {
+        //find minimum edge not in set
+        int index;
+        int min = INT_MAX;
+
+        for (int j = 0; j < n; j++){
+            if (set[j] == false && key[j] < min) {
+                min = key[j]; index = j;
+
+            }
+        }
+        //add to set
+        set[i] = true;
+        //update keys for adjacent vertecies that are not in set and
+        for (int j = 0; j < n; j++) {
+            if (adj[index][j] && set[j] == false && adj[index][j] < key[j]) {
+                parent[j] = index;
+                key[j] = adj[index][j];
+            }
+        }
+
+    }
+    cout << "MST using prim's was: \n";
+    for (int i = 1; i < n; i++)
+        cout << static_cast<char>('A' + parent[i] % 27) << to_string(parent[i] / 27) << " " << static_cast<char>('A' + i % 27) << to_string(i / 27) << " " << adj[i][parent[i]] << "\n";
+}
