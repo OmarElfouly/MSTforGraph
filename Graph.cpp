@@ -108,13 +108,17 @@ graph graph::mstKur()
 }
 void graph::printKur()
 {
-    cout << "The minimum spanning tree is:\n";
+    int sum = 0;
+    cout << "The minimum spanning tree using kur is:\n";
+
     for (auto edge : edges) {
         int one = edge.second.first;
         int two = edge.second.second;
+        sum += edge.first;
 
         cout << static_cast<char>('A' + one)<< to_string(one/27)<< " " << static_cast<char>('A' + two) << to_string(two / 27) << " " << edge.first << "\n";
     }
+    cout << "\nThe minimum total cost is " << sum << ".\n\n";
 }
 
 
@@ -162,6 +166,11 @@ void graph::mstPrim()
 
     }
     cout << "MST using prim's was: \n";
+    int sum = 0;
     for (int i = 1; i < n; i++)
+    {
+        sum += adj[i][parent[i]];
         cout << static_cast<char>('A' + parent[i] % 27) << to_string(parent[i] / 27) << " " << static_cast<char>('A' + i % 27) << to_string(i / 27) << " " << adj[i][parent[i]] << "\n";
+    }
+    cout<< "\nThe minimum total cost is " << sum << ".\n\n";
 }
