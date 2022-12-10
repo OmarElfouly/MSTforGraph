@@ -26,7 +26,7 @@ void graph::add_edge(int i, int j, int w)
 {
     adj[i][j] = w;
     adj[j][i] = w;
-    if (w != 0) {
+    if (w != 0&& edges.find(make_pair(w, make_pair(i, j)))==edges.end()&& edges.find(make_pair(w, make_pair(j, i))) == edges.end()) {
         edges.insert(make_pair(w, make_pair(i, j)));
     }
 }
@@ -44,8 +44,7 @@ void graph::print()
 
     cout << "Number of Vertices are: " << n << "\nNumber of non-zero edges: "<<edges.size()<<"\n\n";
     //Improve or remove the following
-    map<int, char> Alphabet = { {0,'A'},{1,'B'},{2,'C'},{3,'D'},{4,'E'},{5,'F'},{6,'G'},{7,'H'} };
-    
+
     cout << "These " << edges.size() << " are:\n";
     for (auto edge : edges) {
         int one = edge.second.first;
@@ -173,4 +172,13 @@ void graph::mstPrim()
         cout << static_cast<char>('A' + parent[i] % 27) << to_string(parent[i] / 27) << " " << static_cast<char>('A' + i % 27) << to_string(i / 27) << " " << adj[i][parent[i]] << "\n";
     }
     cout<< "\nThe minimum total cost is " << sum << ".\n\n";
+}
+
+void graph::printBoth()
+{
+    graph kur = mstKur();
+    cout << "\n\nMST KUR IS:\n\n";
+    kur.printKur();
+
+    mstPrim();
 }

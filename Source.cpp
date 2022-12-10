@@ -110,15 +110,10 @@ int main() {
 	cout << "Adjacency matrix is:\n";
 	G.print();
 
-	//testing kur
-	graph kur = G.mstKur();
-	cout << "MST KUR IS:\n";
-	kur.printKur();
-
-	//testing prim on orignal
-	G.mstPrim();
+	G.printBoth();
 
 	//testing rand graph file
 	graph r = makeRandomGraph();
 	r.print();
+	r.printBoth();
 }

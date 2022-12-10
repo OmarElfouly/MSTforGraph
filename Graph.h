@@ -23,5 +23,5 @@ public:
     void printKur();
 
     void mstPrim();
-    
+    void printBoth();
 };
