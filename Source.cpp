@@ -2,6 +2,8 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <cstdlib>
+#include <time.h>
 //We will be storing edges in an adjacency matrix
 
 
@@ -22,6 +24,60 @@ vector<int> readFileIntoVector(string filename) {
 		cout << "\nFailed to open file!\n";
 	}
 	return res;
+}
+
+void makeRandomGraph() {
+	//setting number of vertices
+	cout << "Please input the number of vertices: ";
+	int v;
+	cin >> v;
+	while (v < 1) {
+		cout << "Invalid input.\nMake sure to input a positive integer: ";
+		cin >> v;
+	}
+	// set min and max edge weight
+	cout << "Input min edge weight: ";
+	int minW;
+	cin >> minW;
+	while (minW < 1) {
+		cout << "Invalid input.\nMake sure to input a positive integer: ";
+		cin >> minW;
+	}
+	cout << "Input max edge weight: ";
+	int maxW;
+	cin >> maxW;
+	while (maxW < minW ) {
+		cout << "Invalid input.\nMake sure to input a positive integer greater than the min edge weight: ";
+		cin >> maxW;
+	}
+	srand(time(0));
+	int** arr;
+	arr = new int* [v];
+	for (int i = 0; i < v; i++) {
+		arr[i] = new int[v];
+		for (int j = 0; j < v; j++) {
+			arr[i][j] = 0;
+		}
+	}
+
+	for (int i = 0; i < v; i++) {
+		for (int j = i; j < v; j++) {
+			int r = rand() % (maxW + 1);
+			if (r < minW) {
+				r = 0;
+			}
+			arr[i][j] = r;
+			arr[j][i] = r;
+		}
+	}
+	ofstream f("newGraph.txt");
+	f << to_string(v)<<" ";
+	for (int i = 0; i < v; i++) {
+		for (int j = 0; j < v; j++) {
+			f << arr[i][j] << " ";
+		}
+	}
+
 }
 
 int main() {

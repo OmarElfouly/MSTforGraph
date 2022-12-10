@@ -24,6 +24,7 @@ graph::~graph()
 void graph::add_edge(int i, int j, int w)
 {
     adj[i][j] = w;
+    adj[j][i] = w;
     if (w != 0) {
         edges.insert(make_pair(w, make_pair(i, j)));
     }
