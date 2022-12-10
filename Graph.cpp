@@ -124,20 +124,15 @@ void graph::printKur()
 
 void graph::mstPrim()
 {
-    int size = n;
-
     int* parent = new int[n];
-    //vector<int> parent(n);
     int* key = new int[n];
-    //vector<int> key(n, INT_MAX);
     bool* set = new bool[n];
-    //vector<bool> set(n, false);
-
+    // set all keys to inf and all sets false i.e. empty set
     for (int i = 0; i < n; i++) {
         key[i] = INT_MAX;
         set[i] = false;
     }
-
+    //set first vertex as root and set its key to 0 to ensure it is chosen first
     key[0] = 0;
     parent[0] = -1;
 
@@ -153,9 +148,9 @@ void graph::mstPrim()
 
             }
         }
-        //add to set
+        //add vertex with min edge/key value to set
         set[index] = true;
-        //update keys for adjacent vertecies that are not in set and
+        //update keys for adjacent vertecies that are not in set and if their weight is less than key
         for (int j = 0; j < n; j++) {
             if (adj[index][j] && set[j] == false && adj[index][j] < key[j]) {
                 parent[j] = index;
@@ -164,6 +159,7 @@ void graph::mstPrim()
         }
 
     }
+    // output edges
     cout << "MST using prim's was: \n";
     int sum = 0;
     for (int i = 1; i < n; i++)
