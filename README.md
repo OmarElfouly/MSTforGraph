@@ -1,5 +1,5 @@
 # MSTforGraph
-##To do:
+## To do:
 
 - [ ]  Random file generation
 - [ ]  Prim
