@@ -102,6 +102,19 @@ graph makeRandomGraph() {
 
 }
 
+void countComparisons() {
+	ofstream f("output.txt");
+
+	for (int i = 8; i < 65; i++) {
+		graph g(i);
+		g.randomfill();
+		f << i << "," << g.mstKur_comparisons() << "," << g.mstPrim_comparisons() << "\n";
+		//cout<< i << "," << g.mstKur_comparisons() << "," << g.mstPrim_comparisons() << "\n";
+	}
+	f.close();
+
+}
+
 
 int main() {
 	
@@ -112,6 +125,8 @@ int main() {
 
 	G.printBoth();
 
+	// experiment of count
+	countComparisons();
 	//testing rand graph file
 	graph r = makeRandomGraph();
 	r.print();

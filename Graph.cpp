@@ -1,7 +1,7 @@
 #include "Graph.h"
 #include <map>
 #include <string>
-
+#include <cmath>
 graph::graph(int n)
 {
     this->n = n;
@@ -105,6 +105,69 @@ graph graph::mstKur()
     return mst;
     
 }
+int graph::mstKur_comparisons()
+{
+    double comp = 0;
+    //create a new graph to store the minimum spanning tree
+    graph mst(n); // no comparisons
+    //create a set of edges
+    set<pair<int, pair<int, int>>> E = edges;
+
+    set<set<int>> trees;// trees starts of as vertices
+    for (int i = 0; i < n; i++) {
+
+        set<int> tree;
+        tree.insert(i);
+        comp += log2(tree.size());
+        trees.insert(tree);
+        comp += log2(trees.size());
+
+    }
+    //while there are still edges to be added
+    while (!E.empty()) {// this will count as one comparison
+        comp+=1;
+        //get the edge with the smallest weight
+        pair<int, pair<int, int>> edge = *E.begin();
+        comp += log2(E.size());
+        E.erase(edge);
+        //get the two vertices of the edge
+        int i = edge.second.first;
+        int j = edge.second.second;
+        int w = edge.first;
+        //get the trees that contain the two vertices
+        set<int> tree1;
+        set<int> tree2;
+        for (set<set<int>>::iterator it = trees.begin(); it != trees.end(); it++) {
+            comp += 1;
+            if ((*it).find(i) != (*it).end()) {
+                tree1 = *it;
+            }
+            comp += 1;
+            if ((*it).find(j) != (*it).end()) {
+                tree2 = *it;
+            }
+        }
+        //if the two vertices are not in the same cluster i.e. no cycle
+        comp += 1;
+        if (tree1.size() != 0 && tree2.size() != 0 && tree1 != tree2) {
+            //add the edge to the minimum spanning tree
+            mst.add_edge(i, j, w);
+            comp += 1;
+            //merge the two trees
+            comp += log2(trees.size());
+            trees.erase(tree1);
+            comp += log2(trees.size());
+            trees.erase(tree2);
+            comp += log2(trees.size());
+            tree1.insert(tree2.begin(), tree2.end());
+            //new stuff
+            comp += log2(trees.size());
+            trees.insert(tree1);
+        }
+    }
+    comp += 1;
+    return comp;
+}
 void graph::printKur()
 {
     int sum = 0;
@@ -170,6 +233,52 @@ void graph::mstPrim()
     cout<< "\nThe minimum total cost is " << sum << ".\n\n";
 }
 
+int graph::mstPrim_comparisons()
+{
+    double comp = 0;
+
+    int* parent = new int[n];
+    int* key = new int[n];
+    bool* set = new bool[n];
+    // set all keys to inf and all sets false i.e. empty set
+    for (int i = 0; i < n; i++) {//no comparisons
+        
+        key[i] = INT_MAX;
+        set[i] = false;
+    }
+    //set first vertex as root and set its key to 0 to ensure it is chosen first
+    key[0] = 0;
+    parent[0] = -1;
+
+    for (int i = 0; i < n; i++) {
+        //find minimum edge not in set
+        int index;
+        int min = INT_MAX;
+
+        for (int j = 0; j < n; j++) {
+            comp += 1;
+            if (set[j] == false && key[j] < min) {
+                min = key[j];
+                index = j;
+
+            }
+        }
+        //add vertex with min edge/key value to set
+        set[index] = true;
+        //update keys for adjacent vertecies that are not in set and if their weight is less than key
+        for (int j = 0; j < n; j++) {
+            comp += 1;
+            if (adj[index][j] && set[j] == false && adj[index][j] < key[j]) {
+                parent[j] = index;
+                key[j] = adj[index][j];
+            }
+        }
+
+    }
+
+    return comp;
+}
+
 void graph::printBoth()
 {
     graph kur = mstKur();
@@ -177,4 +286,25 @@ void graph::printBoth()
     kur.printKur();
 
     mstPrim();
+}
+
+void graph::randomfill()
+{
+    srand(time(0));
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            adj[i][j] = 0;
+        }
+    }
+    for (int i = 0; i < n; i++) {
+        for (int j = i; j < n; j++) {
+            int r = rand() % (100 + 1);
+            if (r < 20) {
+                r = 0;
+            }
+            adj[i][j] = r;
+            adj[j][i] = r;
+        }
+    }
+
 }
