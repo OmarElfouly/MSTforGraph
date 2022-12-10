@@ -17,8 +17,9 @@ vector<int> readFileIntoVector(string filename) {
 		while (f) {
 			f >> s;
 			res.push_back(stoi(s));
-			f.close();
 		}
+		f.close();
+
 	}
 	else {
 		cout << "\nFailed to open file!\n";
@@ -41,6 +42,7 @@ graph readFileIntoGraph(string filename) {
 			G.add_edge(i, j, read[count++]);
 		}
 	}
+	return G;
 }
 
 graph makeRandomGraph() {
@@ -103,8 +105,6 @@ graph makeRandomGraph() {
 
 int main() {
 	
-
-	
 	graph G = readFileIntoGraph("Text.txt");
 	//output graph
 	cout << "Adjacency matrix is:\n";
@@ -116,6 +116,7 @@ int main() {
 	kur.printKur();
 
 	//testing rand graph file
-	makeRandomGraph();
+	graph r =makeRandomGraph();
+	r.print();
 
 }

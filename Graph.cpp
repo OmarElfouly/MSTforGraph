@@ -1,5 +1,6 @@
 #include "Graph.h"
 #include <map>
+#include <string>
 
 graph::graph(int n)
 {
@@ -47,7 +48,10 @@ void graph::print()
     
     cout << "These " << edges.size() << " are:\n";
     for (auto edge : edges) {
-        cout << Alphabet[edge.second.first] << " " << Alphabet[edge.second.second] << " " << edge.first<<"\n";
+        int one = edge.second.first;
+        int two = edge.second.second;
+
+        cout << static_cast<char>('A' + one%27) << to_string(one / 27) << " " << static_cast<char>('A' + two%27) << to_string(two / 27) << " " << edge.first << "\n";
     }
 
     
@@ -104,10 +108,11 @@ graph graph::mstKur()
 }
 void graph::printKur()
 {
-    map<int, char> Alphabet = { {0,'A'},{1,'B'},{2,'C'},{3,'D'},{4,'E'},{5,'F'},{6,'G'},{7,'H'} };
-
     cout << "The minimum spanning tree is:\n";
     for (auto edge : edges) {
-        cout << Alphabet[edge.second.first] << " " << Alphabet[edge.second.second] << " " << edge.first << "\n";
+        int one = edge.second.first;
+        int two = edge.second.second;
+
+        cout << static_cast<char>('A' + one)<< to_string(one/27)<< " " << static_cast<char>('A' + two) << to_string(two / 27) << " " << edge.first << "\n";
     }
 }
