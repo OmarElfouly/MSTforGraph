@@ -120,7 +120,6 @@ graph graph::mstKur()
             trees.insert(tree1);
         }
     }
-    cout << "test\n";
     return mst;
     
 }
