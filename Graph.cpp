@@ -68,21 +68,10 @@ graph graph::mstKur()
 {
     //create a new graph to store the minimum spanning tree
     graph mst(n);
-    //create a set of vertices
-    set<int> vertices;
-    for (int i = 0; i < n; i++) {
-        vertices.insert(i);
-    }
     //create a set of edges
     set<pair<int, pair<int, int>>> E = edges;
-    /*for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            if (adj[i][j] != 0) {
-                edges.insert(make_pair(adj[i][j], make_pair(i, j)));
-            }
-        }
-    }*/
-    set<set<int>> trees;
+    
+    set<set<int>> trees;// trees starts of as vertices
     for (int i = 0; i < n; i++) {
         set<int> tree;
         tree.insert(i);
