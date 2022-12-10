@@ -17,7 +17,7 @@ vector<int> readFileIntoVector(string filename) {
 		while (f) {
 			f >> s;
 			res.push_back(stoi(s));
-			//cout << s<<" ";//was used to test
+			f.close();
 		}
 	}
 	else {
@@ -26,7 +26,24 @@ vector<int> readFileIntoVector(string filename) {
 	return res;
 }
 
-void makeRandomGraph() {
+graph readFileIntoGraph(string filename) {
+	//readFile
+	vector<int> read = readFileIntoVector(filename);
+	//first item is size
+	int size = read[0];
+	read.erase(read.begin());
+
+	//create graph and edges
+	graph G(size);
+	int count = 0;
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+			G.add_edge(i, j, read[count++]);
+		}
+	}
+}
+
+graph makeRandomGraph() {
 	//setting number of vertices
 	cout << "Please input the number of vertices: ";
 	int v;
@@ -71,31 +88,24 @@ void makeRandomGraph() {
 		}
 	}
 	ofstream f("newGraph.txt");
-	f << to_string(v)<<" ";
+	f << to_string(v);
 	for (int i = 0; i < v; i++) {
 		for (int j = 0; j < v; j++) {
-			f << arr[i][j] << " ";
+			f << " "<< arr[i][j] ;
 		}
 	}
+	f.close();
+	graph g = readFileIntoGraph("newGraph.txt");
+	return g;
 
 }
 
+
 int main() {
-	//readFile
-	vector<int> read = readFileIntoVector("Text.txt");
-	//first item is size
-	int size = read[0];
-	read.erase(read.begin());
+	
 
-	//create graph and edges
-	graph G(size);
-	int count = 0;
-	for (int i = 0; i < size; i++) {
-		for (int j = 0; j < size; j++) {
-			G.add_edge(i, j, read[count++]);
-		}
-	}
-
+	
+	graph G = readFileIntoGraph("Text.txt");
 	//output graph
 	cout << "Adjacency matrix is:\n";
 	G.print();
@@ -104,5 +114,8 @@ int main() {
 	graph kur = G.mstKur();
 	cout << "MST KUR IS:\n";
 	kur.printKur();
+
+	//testing rand graph file
+	makeRandomGraph();
 
 }
