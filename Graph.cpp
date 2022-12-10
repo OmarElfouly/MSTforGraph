@@ -32,18 +32,16 @@ void graph::add_edge(int i, int j, int w)
 
 void graph::print()
 {
-    int count = 0;
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             cout.width(3);
             cout << adj[i][j] << " ";
-            count++;
         }
         cout << "\n";
     }
     cout << "\n";
 
-    cout << "Number of Vertices are: " << n << "\nNumber of non-zero edges: "<<count<<"\n\n";
+    cout << "Number of Vertices are: " << n << "\nNumber of non-zero edges: "<<edges.size()<<"\n\n";
     //Improve or remove the following
     map<int, char> Alphabet = { {0,'A'},{1,'B'},{2,'C'},{3,'D'},{4,'E'},{5,'F'},{6,'G'},{7,'H'} };
     
