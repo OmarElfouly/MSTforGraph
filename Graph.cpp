@@ -24,7 +24,9 @@ graph::~graph()
 void graph::add_edge(int i, int j, int w)
 {
     adj[i][j] = w;
-    //E.push_back({w,{i,j}});
+    if (w != 0) {
+        edges.insert(make_pair(w, make_pair(i, j)));
+    }
 }
 
 void graph::print()
@@ -45,14 +47,14 @@ void graph::print()
     map<int, char> Alphabet = {
         {0,'A'},{1,'B'},{2,'C'},{3,'D'},{4,'E'},{5,'F'},{6,'G'},{7,'H'}
     };
-    set<pair<int, pair<int, int>>> edges;
+    /*set<pair<int, pair<int, int>>> edges;
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             if (adj[i][j] != 0) {
                 edges.insert(make_pair(adj[i][j], make_pair(i, j)));
             }
         }
-    }
+    }*/
     cout << "These " << edges.size() << " are:\n";
     for (auto edge : edges) {
         cout << Alphabet[edge.second.first] << " " << Alphabet[edge.second.second] << " " << edge.first<<"\n";
@@ -72,14 +74,14 @@ graph graph::mstKur()
         vertices.insert(i);
     }
     //create a set of edges
-    set<pair<int, pair<int, int>>> edges;
-    for (int i = 0; i < n; i++) {
+    set<pair<int, pair<int, int>>> E = edges;
+    /*for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             if (adj[i][j] != 0) {
                 edges.insert(make_pair(adj[i][j], make_pair(i, j)));
             }
         }
-    }
+    }*/
     set<set<int>> trees;
     for (int i = 0; i < n; i++) {
         set<int> tree;
@@ -87,10 +89,10 @@ graph graph::mstKur()
         trees.insert(tree);
     }
     //while there are still edges to be added
-    while (!edges.empty()) {
+    while (!E.empty()) {
         //get the edge with the smallest weight
-        pair<int, pair<int, int>> edge = *edges.begin();
-        edges.erase(edges.begin());
+        pair<int, pair<int, int>> edge = *E.begin();
+        E.erase(edge);
         //get the two vertices of the edge
         int i = edge.second.first;
         int j = edge.second.second;
@@ -122,6 +124,14 @@ graph graph::mstKur()
     return mst;
     
 }
-/*graph graph::mstKur() {
+void graph::printKur()
+{
+    map<int, char> Alphabet = {
+        {0,'A'},{1,'B'},{2,'C'},{3,'D'},{4,'E'},{5,'F'},{6,'G'},{7,'H'}
+    };
 
-}*/
+    cout << "The minimum spanning tree is:\n";
+    for (auto edge : edges) {
+        cout << Alphabet[edge.second.first] << " " << Alphabet[edge.second.second] << " " << edge.first << "\n";
+    }
+}

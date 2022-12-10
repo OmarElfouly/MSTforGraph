@@ -47,6 +47,6 @@ int main() {
 	//testing kur
 	graph kur = G.mstKur();
 	cout << "MST KUR IS:\n";
-	kur.print();
+	kur.printKur();
 
 }
