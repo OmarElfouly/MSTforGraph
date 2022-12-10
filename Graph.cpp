@@ -44,17 +44,8 @@ void graph::print()
 
     cout << "Number of Vertices are: " << n << "\nNumber of non-zero edges: "<<count<<"\n\n";
     //Improve or remove the following
-    map<int, char> Alphabet = {
-        {0,'A'},{1,'B'},{2,'C'},{3,'D'},{4,'E'},{5,'F'},{6,'G'},{7,'H'}
-    };
-    /*set<pair<int, pair<int, int>>> edges;
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            if (adj[i][j] != 0) {
-                edges.insert(make_pair(adj[i][j], make_pair(i, j)));
-            }
-        }
-    }*/
+    map<int, char> Alphabet = { {0,'A'},{1,'B'},{2,'C'},{3,'D'},{4,'E'},{5,'F'},{6,'G'},{7,'H'} };
+    
     cout << "These " << edges.size() << " are:\n";
     for (auto edge : edges) {
         cout << Alphabet[edge.second.first] << " " << Alphabet[edge.second.second] << " " << edge.first<<"\n";
@@ -114,9 +105,7 @@ graph graph::mstKur()
 }
 void graph::printKur()
 {
-    map<int, char> Alphabet = {
-        {0,'A'},{1,'B'},{2,'C'},{3,'D'},{4,'E'},{5,'F'},{6,'G'},{7,'H'}
-    };
+    map<int, char> Alphabet = { {0,'A'},{1,'B'},{2,'C'},{3,'D'},{4,'E'},{5,'F'},{6,'G'},{7,'H'} };
 
     cout << "The minimum spanning tree is:\n";
     for (auto edge : edges) {
