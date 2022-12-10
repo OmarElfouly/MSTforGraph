@@ -124,8 +124,11 @@ void graph::mstPrim()
     int size = n;
 
     int* parent = new int[n];
+    //vector<int> parent(n);
     int* key = new int[n];
+    //vector<int> key(n, INT_MAX);
     bool* set = new bool[n];
+    //vector<bool> set(n, false);
 
     for (int i = 0; i < n; i++) {
         key[i] = INT_MAX;
@@ -135,19 +138,20 @@ void graph::mstPrim()
     key[0] = 0;
     parent[0] = -1;
 
-    for (int i = 0; i < n - 1; i++) {
+    for (int i = 0; i < n; i++) {
         //find minimum edge not in set
         int index;
         int min = INT_MAX;
 
         for (int j = 0; j < n; j++){
             if (set[j] == false && key[j] < min) {
-                min = key[j]; index = j;
+                min = key[j];
+                index = j;
 
             }
         }
         //add to set
-        set[i] = true;
+        set[index] = true;
         //update keys for adjacent vertecies that are not in set and
         for (int j = 0; j < n; j++) {
             if (adj[index][j] && set[j] == false && adj[index][j] < key[j]) {
